@@ -118,7 +118,7 @@ namespace Gimbl
             logSettings.inputSmooth = settings.inputSmooth;
             logSettings.isActive = settings.isActive;
             logSettings.loopPath = settings.loopPath;
-            logger.logFile.Log<KeyLinearSettings>("Linear Controller Settings", logSettings);
+            if (logger != null && logger.logFile != null) logger.logFile.Log<KeyLinearSettings>("Linear Controller Settings", logSettings);
         }
         public void CheckLinearSettings()
         {
@@ -187,7 +187,7 @@ namespace Gimbl
                 // Log raw input controller.
                 logMsg.name = name;
                 logMsg.move = (int)(movement.Sum().x * 1000);
-                logger.logFile.Log("Linear Controller", logMsg);
+                if (logger != null && logger.logFile != null) logger.logFile.Log("Linear Controller", logMsg);
 
             }
 
@@ -199,7 +199,7 @@ namespace Gimbl
         {
             if (this.GetType() == typeof(LinearTreadmill))
             {
-                statusChannel.Send(new StatusMsg() { status = false });
+                if (statusChannel != null) statusChannel.Send(new StatusMsg() { status = false });
             }
         }
 

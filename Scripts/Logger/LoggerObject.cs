@@ -31,7 +31,8 @@ namespace Gimbl
         public void OnEnable()
         {
             // Logger object start mqtt client to ensure its ready.
-            GameObject.FindObjectOfType<Gimbl.MQTTClient>().Connect(false);
+            var client = GameObject.FindObjectOfType<Gimbl.MQTTClient>();
+            if (client != null) client.Connect(false);
             StartLog();
         }
         private void StartLog()
@@ -63,18 +64,18 @@ namespace Gimbl
             startMsg.time = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             startMsg.scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             startMsg.project = PlayerSettings.productName;
-            logFile.Log("Info", startMsg);
+            if (logFile != null) logFile.Log("Info", startMsg);
             // Setup Listener.
             MQTTRawChannel channel = new MQTTRawChannel("Log/");
             channel.Event.AddListener(OnMessage);
             // Start Times. 
-            logFile.stopwatch.Start();
+            if (logFile != null) logFile.stopwatch.Start();
         }
 
         private void OnApplicationQuit()
         {
             // Close stream.
-            logFile.Close();
+            if (logFile != null) logFile.Close();
 
         }
         private bool CheckFileExists(string filePth)
@@ -88,7 +89,7 @@ namespace Gimbl
             }
             else { return false; }
         }
-        private void OnMessage(string msg) { logFile.LogJson("Log",msg); }
+        private void OnMessage(string msg) { if (logFile != null) logFile.LogJson("Log", msg); }
         private void OnLogFileName(MQTTLogFile msg) { if (logFile == null) { logFile = new LogFile(msg.filePath); } }
     }
     public class LogFile

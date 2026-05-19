@@ -94,7 +94,7 @@ namespace Gimbl
         }
 
         public void Start() {
-            logger = FindObjectOfType<LoggerObject>().logFile;
+            logger = FindObjectOfType<LoggerObject>();
             actLogMsg.name = name;
             // Setup idle monitor.
             idleChan = new MQTTChannel<IdleMessage>("Gimbl/Idle/");
@@ -111,7 +111,7 @@ namespace Gimbl
             actLogMsg.heading[0] = (int)(gameObject.transform.rotation.x * roundFct); 
             actLogMsg.heading[1] = (int)(gameObject.transform.rotation.y * roundFct);
             actLogMsg.heading[2] = (int)(gameObject.transform.rotation.z * roundFct);
-            logger.Log("Position", actLogMsg);
+            if (logger != null) logger.Log("Position", actLogMsg);
 
             // Log position on path (if applicable).
             if (controller != null)
@@ -123,7 +123,7 @@ namespace Gimbl
                         pathMsg.name = name;
                         pathMsg.pathName = ((LinearTreadmill)controller.master).path.name;
                         pathMsg.position = (int)(((LinearTreadmill)controller.master).path.path.GetClosestDistanceAlongPath(gameObject.transform.position) * 1000);
-                        logger.Log("Path Position", pathMsg);
+                        if (logger != null) logger.Log("Path Position", pathMsg);
                     }
                 }
             }
@@ -143,7 +143,7 @@ namespace Gimbl
                         idleMsg.name = name;
                         idleMsg.idleTime = (int)(settings.idleTimeOut * 60000);
                         idleChan.Send(idleMsg);
-                        logger.Log("Idle!");
+                        if (logger != null) logger.Log("Idle!");
                     }
                 }
                 else
