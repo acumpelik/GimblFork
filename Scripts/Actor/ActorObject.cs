@@ -94,7 +94,8 @@ namespace Gimbl
         }
 
         public void Start() {
-            logger = FindObjectOfType<LoggerObject>();
+            LoggerObject loggerObj = FindObjectOfType<LoggerObject>();
+            logger = loggerObj != null ? loggerObj.logFile : null;
             actLogMsg.name = name;
             // Setup idle monitor.
             idleChan = new MQTTChannel<IdleMessage>("Gimbl/Idle/");
