@@ -171,7 +171,7 @@ namespace Gimbl
         void Start()
         {
             // Get instance of logger.
-            logger = FindObjectOfType<LoggerObject>();
+            logger = FindFirstObjectByType<LoggerObject>();
             // Setup Listener.
             MQTTChannel<MSG> channel = new MQTTChannel<MSG>(string.Format("{0}/Data", settings.deviceName));
             channel.Event.AddListener(OnMessage);

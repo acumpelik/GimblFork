@@ -19,7 +19,7 @@ namespace Gimbl
         void Start()
         {
             // Get instance of logger.
-            logger = FindObjectOfType<LoggerObject>();
+            logger = FindFirstObjectByType<LoggerObject>();
             // Acquire gamepad if selected.
             if (settings.gamepadSettings.selectedGamepad > 0) gamepad.Acquire(settings.gamepadSettings.selectedGamepad - 1);
             // Setup MQTT Channels for button presses.

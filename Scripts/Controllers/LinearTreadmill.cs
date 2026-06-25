@@ -76,7 +76,7 @@ namespace Gimbl
         void OnEnable()
         {
             // Get instance of logger.
-            logger = FindObjectOfType<LoggerObject>();
+            logger = FindFirstObjectByType<LoggerObject>();
         }
 
         void Start()

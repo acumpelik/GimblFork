@@ -141,14 +141,14 @@ public class DisplaysWindow : EditorWindow
 
     private void SelectMenu<T>(MenuSettings<T> settings) where T : UnityEngine.Object
     {
-        T obj = FindObjectOfType<T>();
+        T obj = FindFirstObjectByType<T>();
         if (settings.selected == null && obj != null) settings.selected = obj;
         settings.selected = (T)EditorGUILayout.ObjectField(settings.selected, typeof(T), true);
     }
     private void CreateButton<T>(MenuSettings<T> settings, CreateFunc<T> func) where T : UnityEngine.Object
     {
         EditorGUILayout.BeginHorizontal();
-        T[] objs = FindObjectsOfType<T>();
+        T[] objs = FindObjectsByType<T>(FindObjectsSortMode.None);
         string[] names = objs.Select(x => x.name).ToArray();
         string msg = "";
         if (ArrayUtility.Contains(names, settings.name)) { msg = "Duplicate name"; GUI.enabled = false; }

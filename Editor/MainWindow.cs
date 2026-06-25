@@ -59,7 +59,7 @@ public class MainWindow : EditorWindow
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, GUILayout.Height(position.height), GUILayout.Width(position.width));
         #region Logging.
         EditorGUILayout.BeginVertical(LayoutSettings.mainBox.style);
-        Logger = new SerializedObject(FindObjectOfType<LoggerObject>().settings);
+        Logger = new SerializedObject(FindFirstObjectByType<LoggerObject>().settings);
         outputPath = Logger.FindProperty("outputPath");
         outputFile = Logger.FindProperty("outputFile");
 
